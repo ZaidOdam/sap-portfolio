@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-sap-bg-grey text-sap-text antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-sap-dark-blue;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold transition-all duration-300 gap-2;
+  }
+
+  .btn-primary {
+    @apply bg-sap-blue text-white hover:bg-sap-dark-blue shadow-sm hover:shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-sap-blue border border-sap-blue hover:bg-blue-50;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 p-8;
+  }
+}
