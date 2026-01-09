@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, Download } from 'lucide-react';
 import profileImg from '../assets/profile.jpg';
-import resumePdf from '../assets/resume.pdf';
 
 const Hero = () => {
     return (
@@ -48,7 +47,7 @@ const Hero = () => {
                             <a href="#experience" className="inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold transition-all duration-300 gap-2 bg-sap-dark-blue text-white hover:bg-sap-blue shadow-lg hover:shadow-sap-blue/25">
                                 View Experience <ChevronRight size={18} />
                             </a>
-                            <a href={resumePdf} download="zaidodam_resume.pdf" className="inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold transition-all duration-300 gap-2 bg-transparent text-sap-dark-blue border-2 border-sap-dark-blue hover:bg-sap-dark-blue/5">
+                            <a href="/zaidodam_resume.pdf" download="zaidodam_resume.pdf" className="inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold transition-all duration-300 gap-2 bg-transparent text-sap-dark-blue border-2 border-sap-dark-blue hover:bg-sap-dark-blue/5">
                                 Download Resume <Download size={18} />
                             </a>
                         </div>
