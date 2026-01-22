@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 const Skills = () => {
     const skillCategories = [
         {
-            title: "SAP Level 2 Support",
-            skills: ["Recruiting Management (RCM)", "Onboarding 2.0 (ONB)", "Recruiting Marketing (RMK)", "Business Rules", "Route Maps", "Offer Letters"]
+            title: "SAP SuccessFactors",
+            skills: ["Recruiting Management (RCM)", "Onboarding 2.0 (ONB)", "Recruiting Marketing (RMK)"]
         },
         {
-            title: "Soft Skills & Tools",
-            skills: ["Client Communication", "SLA Management", "Problem Solving", "Team Leadership", "Case Resolution", "ServiceNow", "JIRA", "Splunk"]
+            title: "Soft Skills",
+            skills: ["Client Communication", "SLA Management", "Problem Solving", "Team Leadership", "Case Resolution"]
         }
     ];
 

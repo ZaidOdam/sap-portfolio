@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Briefcase, Award, GraduationCap, Phone } from 'lucide-react';
+import { Menu, X, Briefcase, Award, GraduationCap, Phone, Trophy, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import logo from '../assets/logo.png';
@@ -37,10 +37,10 @@ const Header = () => {
 
   const navItems = [
     { name: 'Experience', href: '#experience', icon: Briefcase, id: 'experience' },
-    { name: 'Skills', href: '#skills', icon: Award, id: 'skills' },
+    { name: 'Skills', href: '#skills', icon: ShieldCheck, id: 'skills' },
     { name: 'Certifications', href: '#certifications', icon: Award, id: 'certifications' },
+    { name: 'Achievements', href: '#achievements', icon: Trophy, id: 'achievements' },
     { name: 'Education', href: '#education', icon: GraduationCap, id: 'education' },
-    { name: 'Achievements', href: '#achievements', icon: Award, id: 'achievements' },
     { name: 'Contact', href: '#contact', icon: Phone, id: 'contact' },
   ];
 
