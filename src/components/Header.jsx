@@ -26,7 +26,7 @@ const Header = () => {
           }
         });
       },
-      { threshold: 0.5 }
+      { rootMargin: '-50% 0px -50% 0px' }
     );
 
     const sections = document.querySelectorAll('section[id]');
@@ -47,12 +47,12 @@ const Header = () => {
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-sap-dark-blue shadow-md py-3' : 'bg-sap-dark-blue py-4'}`}>
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center text-white">
-        <a href="#" className="flex items-center gap-2 text-xl font-bold">
+        <a href="#" className="flex items-center gap-2 text-xl font-bold shrink-0">
           <img src={logo} alt="Zaid Odam" className="h-12 w-auto" />
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           {navItems.map((item) => (
             <a
               key={item.name}
@@ -68,7 +68,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white p-2"
+          className="lg:hidden text-white p-2"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -83,7 +83,7 @@ const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white overflow-hidden absolute top-full left-0 w-full shadow-xl border-t border-gray-100"
+            className="lg:hidden bg-white overflow-hidden absolute top-full left-0 w-full shadow-xl border-t border-gray-100"
           >
             <nav className="flex flex-col">
               {navItems.map((item) => (

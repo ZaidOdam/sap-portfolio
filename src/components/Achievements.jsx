@@ -29,7 +29,7 @@ const achievements = [
     },
     {
         title: "Certificate of Appreciation",
-        date: "2025",
+        date: "October 2025",
         description: "Exemplary performance contributing to SAP and Tech Mahindra's growth.",
         link: "https://drive.google.com/file/d/1jUOYm4Zbn3xA9AGfV4CyFeu7xs7fCUQc/view?usp=drive_link",
         icon: Medal,
