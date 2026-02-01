@@ -1,29 +1,64 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Phone, Mail, Linkedin } from 'lucide-react';
+import { Send, Phone, Mail, Linkedin, CheckCircle, XCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+// ============================================
+// EMAILJS CONFIGURATION
+// ============================================
+// These values are loaded from environment variables (.env file)
+// See .env.example for the required variables
+// ============================================
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        subject: '',
+        title: '',
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        setTimeout(() => {
-            console.log('Form submitted:', formData);
-            alert('Thank you for your message! I will get back to you soon.');
+        setSubmitStatus(null);
+
+        try {
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                {
+                    title: formData.title,
+                    name: formData.name,
+                    email: formData.email,
+                    message: formData.message,
+                },
+                EMAILJS_PUBLIC_KEY
+            );
+
+            setSubmitStatus('success');
+            setFormData({ name: '', email: '', title: '', message: '' });
+
+            // Hide success message after 5 seconds
+            setTimeout(() => setSubmitStatus(null), 5000);
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+            setSubmitStatus('error');
+
+            // Hide error message after 5 seconds
+            setTimeout(() => setSubmitStatus(null), 5000);
+        } finally {
             setIsSubmitting(false);
-            setFormData({ name: '', email: '', subject: '', message: '' });
-        }, 1000);
+        }
     };
 
     const contactItems = [
@@ -37,7 +72,8 @@ const Contact = () => {
             icon: Mail,
             label: 'Email',
             value: 'zaidodam@gmail.com',
-            href: 'mailto:zaidodam@gmail.com',
+            href: 'https://mail.google.com/mail/?view=cm&to=zaidodam@gmail.com',
+            external: true
         },
         {
             icon: Linkedin,
@@ -97,6 +133,35 @@ const Contact = () => {
                         transition={{ delay: 0.2 }}
                         className="w-full"
                     >
+                        {/* Status Messages */}
+                        {submitStatus === 'success' && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mb-6 p-4 rounded-xl bg-green-50 border border-green-200 flex items-center gap-3"
+                            >
+                                <CheckCircle className="text-green-500" size={24} />
+                                <div>
+                                    <p className="font-semibold text-green-800">Message sent successfully!</p>
+                                    <p className="text-sm text-green-600">Thank you for reaching out. I'll get back to you soon.</p>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {submitStatus === 'error' && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 flex items-center gap-3"
+                            >
+                                <XCircle className="text-red-500" size={24} />
+                                <div>
+                                    <p className="font-semibold text-red-800">Failed to send message</p>
+                                    <p className="text-sm text-red-600">Please try again or contact me directly via email.</p>
+                                </div>
+                            </motion.div>
+                        )}
+
                         <form onSubmit={handleSubmit} className="space-y-6 bg-white rounded-2xl">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
@@ -126,12 +191,12 @@ const Contact = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="subject" className="block text-sm font-semibold text-sap-dark-blue mb-2">Subject</label>
+                                <label htmlFor="title" className="block text-sm font-semibold text-sap-dark-blue mb-2">Subject</label>
                                 <input
                                     type="text"
-                                    id="subject"
-                                    name="subject"
-                                    value={formData.subject}
+                                    id="title"
+                                    name="title"
+                                    value={formData.title}
                                     onChange={handleChange}
                                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:border-sap-blue focus:ring-1 focus:ring-sap-blue outline-none transition-all"
                                     required
@@ -157,7 +222,15 @@ const Contact = () => {
                                     disabled={isSubmitting}
                                     className="inline-flex py-4 px-12 rounded-xl bg-sap-blue text-white font-semibold items-center justify-center gap-2 hover:bg-sap-dark-blue transition-colors disabled:opacity-70 min-w-[200px] shadow-lg shadow-sap-blue/20"
                                 >
-                                    {isSubmitting ? 'Sending...' : (
+                                    {isSubmitting ? (
+                                        <>
+                                            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                            </svg>
+                                            Sending...
+                                        </>
+                                    ) : (
                                         <>
                                             Send Message
                                             <Send size={18} />
@@ -174,3 +247,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
